@@ -1,20 +1,47 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <h1>Demo for vue-simple-toast</h1>
+    <p>
+      <button @click="showSuccessToast">Show Success Toast</button>
+      <button @click="showErrorToast">Show Error Toast</button>
+      <button @click="showToastWithNoAutoClose">No auto close</button>
+      <button @click="showToastWithTimeout2">Timeout 2 seconds</button>
+    </p>
+    <app-toast></app-toast>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import mixins from 'vue-typed-mixins'
+import ToastMixin from './mixins/ToastMixin'
 
-export default Vue.extend({
-  name: "App",
-  components: {
-    HelloWorld
-  }
-});
+export default mixins(ToastMixin).extend({
+  name: 'App',
+  components: {},
+  methods: {
+    showSuccessToast() {
+      this.$toast({ message: 'This is a success message!', status: 'success' })
+    },
+    showErrorToast() {
+      this.$toast({ message: 'Oops! Error!', status: 'error' })
+    },
+    showToastWithNoAutoClose() {
+      this.$toast({
+        message: 'This error message does not close automatically',
+        status: 'error',
+        timeout: 0,
+      })
+    },
+    showToastWithTimeout2() {
+      this.$toast({
+        message: 'This success message closes after 2 seconds',
+        status: 'success',
+        timeout: 2000,
+      })
+    },
+  },
+})
 </script>
 
 <style lang="scss">
